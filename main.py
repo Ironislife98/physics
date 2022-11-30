@@ -1,63 +1,78 @@
-import pygame
-import pygame.math
-import sys
 
-pygame.init()
-
-WIDTH, HEIGHT = 1000, 900
-window = pygame.display.set_mode((WIDTH, HEIGHT))
-GRAVITYFORCE = 10
+import numpy as np
+from src.classes.body import Body
+from src.classes.simulation import Simulation
 
 
-class Player:
-    def __init__(self, x, y) -> None:
-        self.vector = pygame.Vector2()
-        self.vector.xy = x, y
-        self.width = 100
-        self.height = 100
-        self.image = pygame.draw.circle(window, (0, 0, 0), self.vector.xy, 20)
-    
-    def gravity(self, large):
-        g = (GRAVITYFORCE * large.mass) / (large.radius ** 2)
+# erratic orbits that result in one body off-screen and two bodies in stable binary system that also moves off screen
+body1 = Body(np.array([[500, 300, 0]]), 6 * pow(10, 15), (255, 255, 255))
+body1.add_velocity(np.array([[40, 0, 0]]))
 
-    def draw(self):
-        return pygame.draw.circle(window, (0, 0, 0), self.vector.xy, 20)
+body2 = Body(np.array([[600, 200, 0]]), 6 * pow(10, 15), (0, 0, 255))
+body2.add_velocity(np.array([[-40, 0, 0]]))
 
+body3 = Body(np.array([[300, 500, 0]]), 6 * pow(10, 15), (0, 255, 0))
+body3.add_velocity(np.array([[50, 0, 0]]))
 
-class LargeMass:
-    def __init__(self, mass, x, y, radius) -> None:
-        self.mass = mass
-        self.vector = pygame.Vector2()
-        self.vector.xy = x, y
-        self.radius = radius
-    
-    def draw(self):
-        return pygame.draw.circle(window, (0, 0, 0), self.vector.xy, self.radius)
+sim = Simulation()
+sim.initialise_environment([body1, body2, body3])
+sim.show_environment()
 
-def draw():
-    window.fill((255, 255, 255))
-    p.draw()
-    largemass.draw()
+# ------------------------------------#
 
+#stable circular orbit
+body1 = Body(np.array([[500, 400, 0]]), 6 * pow(10, 15), (255, 255, 255))
 
-def destroy():
-    global run
-    pygame.quit()
-    run = False
-    sys.exit()
+body2 = Body(np.array([[500, 600, 0]]), 6 * pow(10, 9), (0, 0, 255))
+body2.add_velocity(np.array([[200, 0, 0]]))
+#
+sim = Simulation()
+sim.initialise_environment([body1, body2])
+sim.show_environment()
 
-p = Player(400, 100)
-largemass = LargeMass(1000, 400, 400, 100)
+# ------------------------------------#
 
-run = True
-while run:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            destroy()
+# stable elliptical orbit
+# body1 = Body(np.array([[500, 400, 0]]), 6 * pow(10, 15), (255, 255, 255))
+#
+# body2 = Body(np.array([[500, 500, 0]]), 6 * pow(10, 9), (0, 0, 255))
+# body2.add_velocity(np.array([[200, 0, 0]]))
+#
+# sim = Simulation()
+# sim.initialise_environment([body1, body2])
+# sim.show_environment()
 
-    draw()
-    p.gravity(largemass)
-    pygame.display.update()
+# ------------------------------------#
 
+# stable binary star system
+# MASS = 6 * pow(10, 15)
+# SPEED = 200
+#
+# body1 = Body(np.array([[500, 350, 0]]), MASS, (255, 255, 255))
+# body1.add_velocity(np.array([[-1 * SPEED, 0, 0]]))
+#
+# body2 = Body(np.array([[500, 450, 0]]), MASS, (0, 0, 255))
+# body2.add_velocity(np.array([[SPEED, 0, 0]]))
+#
+# sim = Simulation()
+# sim.initialise_environment([body1, body2])
+# sim.show_environment()
 
-sys.exit()
+# ------------------------------------#
+
+# I don't know if this exists. Looks good though!
+# body1 = Body(np.array([[500, 300, 0]]), 6 * pow(10, 15), (255, 255, 255))
+# body1.add_velocity(np.array([[-100, 0, 0]]))
+#
+# body2 = Body(np.array([[400, 400, 0]]), 6 * pow(10, 15), (0, 0, 255))
+# body2.add_velocity(np.array([[0, 100, 0]]))
+#
+# body3 = Body(np.array([[500, 500, 0]]), 6 * pow(10, 15), (0, 255, 0))
+# body3.add_velocity(np.array([[100, 0, 0]]))
+#
+# body4 = Body(np.array([[600, 400, 0]]), 6 * pow(10, 15), (255, 0, 0))
+# body4.add_velocity(np.array([[0, -100, 0]]))
+#
+# sim = Simulation()
+# sim.initialise_environment([body1, body2, body3, body4])
+# sim.show_environment()
