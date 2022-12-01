@@ -33,7 +33,7 @@ class Player:
         # distance = (6.4 * (10 ** 6)) ** 2
         #? Refactor to just largemass.vector.y - self.vector.y
         #? Because y value of self should always be above ground
-        #? Could change to add empty vector to just track where the ground is
+        #? Could change to add empty vector to just track where the ground is?
         distance = max(largemass.vector.y, self.vector.y) - min(largemass.vector.y, self.vector.y)
         force = ((6.67 * (10 ** -11)) * (6 * 10 ** 24) * self.mass) / distance
         print(force)
