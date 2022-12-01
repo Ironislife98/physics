@@ -1,78 +1,82 @@
+import pygame
+import pygame.math
+import sys
+import math
 
-import numpy as np
-from src.classes.body import Body
-from src.classes.simulation import Simulation
+pygame.init()
+
+WIDTH, HEIGHT = 1000, 900
+
+class Player:
+    def __init__(self, x, y, width, height, vel=12):
+        self.mass = 6
+        self.vector = pygame.Vector2()
+        self.vector.x = x
+        self.vector.y = y
+        self.color = (255, 0, 0)
+        self.width = width
+        self.height = height
+        self.vel = 12
+    
+    def move(self):
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_w]:
+            self.vector.y -= self.vel
+        if pressed[pygame.K_s]:
+            self.vector.y += self.vel
+        if pressed[pygame.K_a]:
+            self.vector.x -= self.vel
+        if pressed[pygame.K_d]:
+            self.vector.x += self.vel
+
+    def Physics(self):
+        distance = (6.4 * (10 ** 6)) ** 2
+        force = ((6.67 * (10 ** -11)) * (6 * 10 ** 24) * self.mass) / distance
+        print(force)
+        self.vector.y += force
 
 
-# erratic orbits that result in one body off-screen and two bodies in stable binary system that also moves off screen
-body1 = Body(np.array([[500, 300, 0]]), 6 * pow(10, 15), (255, 255, 255))
-body1.add_velocity(np.array([[40, 0, 0]]))
+    def draw(self):
+        self.Rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)
+        pygame.draw.rect(window, self.color, self.Rect)
 
-body2 = Body(np.array([[600, 200, 0]]), 6 * pow(10, 15), (0, 0, 255))
-body2.add_velocity(np.array([[-40, 0, 0]]))
 
-body3 = Body(np.array([[300, 500, 0]]), 6 * pow(10, 15), (0, 255, 0))
-body3.add_velocity(np.array([[50, 0, 0]]))
+class Ground:
+    def __init__(self):
+        self.x = 0
+        self.y = 800
+        self.width, self.height = 1000, 1000
+        self.color = (0, 0, 0)
+    
+    def draw(self):
+        self.Rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        pygame.draw.rect(window, self.color, self.Rect)
 
-sim = Simulation()
-sim.initialise_environment([body1, body2, body3])
-sim.show_environment()
+def drawAll():
+    window.fill((255, 255, 255))
+    p.draw()
+    p.Physics()
+    ground.draw()
 
-# ------------------------------------#
+window = pygame.display.set_mode((WIDTH, HEIGHT))
+Clock = pygame.time.Clock()
+FRAMERATE = 60
 
-#stable circular orbit
-body1 = Body(np.array([[500, 400, 0]]), 6 * pow(10, 15), (255, 255, 255))
+p = Player(400, 100, 100, 100)
+ground = Ground()
+run = True
+while run:
+    Clock.tick(FRAMERATE)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+            break
+    
+    p.move()
 
-body2 = Body(np.array([[500, 600, 0]]), 6 * pow(10, 9), (0, 0, 255))
-body2.add_velocity(np.array([[200, 0, 0]]))
-#
-sim = Simulation()
-sim.initialise_environment([body1, body2])
-sim.show_environment()
+    drawAll()
 
-# ------------------------------------#
+    pygame.display.update()
 
-# stable elliptical orbit
-# body1 = Body(np.array([[500, 400, 0]]), 6 * pow(10, 15), (255, 255, 255))
-#
-# body2 = Body(np.array([[500, 500, 0]]), 6 * pow(10, 9), (0, 0, 255))
-# body2.add_velocity(np.array([[200, 0, 0]]))
-#
-# sim = Simulation()
-# sim.initialise_environment([body1, body2])
-# sim.show_environment()
-
-# ------------------------------------#
-
-# stable binary star system
-# MASS = 6 * pow(10, 15)
-# SPEED = 200
-#
-# body1 = Body(np.array([[500, 350, 0]]), MASS, (255, 255, 255))
-# body1.add_velocity(np.array([[-1 * SPEED, 0, 0]]))
-#
-# body2 = Body(np.array([[500, 450, 0]]), MASS, (0, 0, 255))
-# body2.add_velocity(np.array([[SPEED, 0, 0]]))
-#
-# sim = Simulation()
-# sim.initialise_environment([body1, body2])
-# sim.show_environment()
-
-# ------------------------------------#
-
-# I don't know if this exists. Looks good though!
-# body1 = Body(np.array([[500, 300, 0]]), 6 * pow(10, 15), (255, 255, 255))
-# body1.add_velocity(np.array([[-100, 0, 0]]))
-#
-# body2 = Body(np.array([[400, 400, 0]]), 6 * pow(10, 15), (0, 0, 255))
-# body2.add_velocity(np.array([[0, 100, 0]]))
-#
-# body3 = Body(np.array([[500, 500, 0]]), 6 * pow(10, 15), (0, 255, 0))
-# body3.add_velocity(np.array([[100, 0, 0]]))
-#
-# body4 = Body(np.array([[600, 400, 0]]), 6 * pow(10, 15), (255, 0, 0))
-# body4.add_velocity(np.array([[0, -100, 0]]))
-#
-# sim = Simulation()
-# sim.initialise_environment([body1, body2, body3, body4])
-# sim.show_environment()
+pygame.quit()
+sys.exit()
