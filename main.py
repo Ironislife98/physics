@@ -29,8 +29,12 @@ class Player:
         if pressed[pygame.K_d]:
             self.vector.x += self.vel
 
-    def Physics(self):
-        distance = (6.4 * (10 ** 6)) ** 2
+    def Physics(self, largemass):
+        # distance = (6.4 * (10 ** 6)) ** 2
+        #? Refactor to just largemass.vector.y - self.vector.y
+        #? Because y value of self should always be above ground
+        #? Could change to add empty vector to just track where the ground is
+        distance = max(largemass.vector.y, self.vector.y) - min(largemass.vector.y, self.vector.y)
         force = ((6.67 * (10 ** -11)) * (6 * 10 ** 24) * self.mass) / distance
         print(force)
         self.vector.y += force
@@ -55,7 +59,7 @@ class Ground:
 def drawAll():
     window.fill((255, 255, 255))
     p.draw()
-    p.Physics()
+    p.Physics(ground)
     ground.draw()
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
