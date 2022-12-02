@@ -2,14 +2,17 @@ import pygame
 import pygame.math
 import sys
 import math
+import time
+import PhysicsEngine
+from pygame.sprite import Sprite
 
 pygame.init()
-
+starttime = time.time()
 WIDTH, HEIGHT = 1000, 900
 
-class Player:
+class Player(Sprite):
     def __init__(self, x, y, width, height, vel=12):
-        self.mass = 6
+        self.mass = 1
         self.vector = pygame.Vector2()
         self.vector.x = x
         self.vector.y = y
@@ -17,6 +20,7 @@ class Player:
         self.width = width
         self.height = height
         self.vel = 12
+        self.engine = PhysicsEngine.PhysicsEngine()
     
     def move(self):
         pressed = pygame.key.get_pressed()
@@ -30,37 +34,31 @@ class Player:
             self.vector.x += self.vel
 
     def Physics(self, largemass):
-        # distance = (6.4 * (10 ** 6)) ** 2
-        #? Refactor to just largemass.vector.y - self.vector.y
-        #? Because y value of self should always be above ground
-        #? Could change to add empty vector to just track where the ground is?
-        distance = max(largemass.vector.y, self.vector.y) - min(largemass.vector.y, self.vector.y)
-        force = ((6.67 * (10 ** -11)) * (6 * 10 ** 24) * self.mass) / distance
-        print(force)
-        self.vector.y += force
-
+        self.vector.y += self.engine.earthGravity(self.mass, largemass.vector.y, self.vector.y)
 
     def draw(self):
         self.Rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)
         pygame.draw.rect(window, self.color, self.Rect)
 
 
-class Ground:
-    def __init__(self):
-        self.x = 0
-        self.y = 800
+class Ground(Sprite):
+    def __init__(self, x=0, y=800):
+        self.vector = pygame.Vector2()
+        self.vector.x = x
+        self.vector.y = y
         self.width, self.height = 1000, 1000
         self.color = (0, 0, 0)
     
     def draw(self):
-        self.Rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.Rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)
         pygame.draw.rect(window, self.color, self.Rect)
 
 def drawAll():
     window.fill((255, 255, 255))
+    ground.draw()
     p.draw()
     p.Physics(ground)
-    ground.draw()
+   
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 Clock = pygame.time.Clock()
