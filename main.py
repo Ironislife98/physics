@@ -47,17 +47,8 @@ class Player(Sprite):
         self.vector.xy += self.velocity.xy
         self.velocity.xy = 0, 0
 
-    def Physics(self, groundObjects, largemass):
-        verticalcollision = self.engine.verticalCollision(self, groundObjects, self.velocity.y)
-        if verticalcollision and self.jumping:
-            self.velocity.y += self.engine.earthGravity(self.mass, largemass.vector.y, self.vector.y, distance=0)
-            self.engine.verticalCollision(self, groundObjects, self.velocity.y)
-            self.jumping = False
-        else:
-            self.velocity.y += self.engine.earthGravity(self.mass, largemass.vector.y, self.vector.y)
-            self.jumping = True
-        """self.engine.verticalCollision(self, [largemass], self.velocity.y)
-        self.velocity.y += self.engine.earthGravity(self.mass, largemass.vector.y, self.vector.y)"""
+    def Physics(self, floorobjects, groundObjects):
+        self.engine.verticalCollision(self, [ground])
 
     def draw(self):
         self.rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)
