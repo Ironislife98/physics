@@ -3,6 +3,8 @@ import math
 
 Attractors = []
 
+G = 6.6743 * (10 ** -11)
+
 
 class RigidBody2D:
     def __init__(self, mass, drag):
@@ -11,7 +13,7 @@ class RigidBody2D:
 
     def addForce(self, initialVector, moveTowards, force):
         """Takes in initialVector and forceVector and returns Vector2 of initalVector moved towards a vector by a force"""
-        return initialVector.move_towards(moveTowards.xy, 100)
+        return initialVector.move_towards(moveTowards.xy, force)
 
 
 class Attractor:
@@ -19,9 +21,15 @@ class Attractor:
         self.childClass = childClass
         Attractors.append(self.childClass)
 
-    def Update(self):
+    def update(self):
+        toreturn = []
         for attractor in Attractors:
-            self.Attract(attractor)
+            if attractor.childClass.name != self.childClass.name:
+                toreturn.append(self.Attract(attractor))
+        """temp = pygame.Vector2(0, 0)
+        for item in toreturn:
+            temp = temp + item"""
+        return toreturn
 
     def Attract(self, objToAttract):
         """
@@ -31,12 +39,12 @@ class Attractor:
         direction = self.childClass.vector - objToAttract.vector
         distance = direction.magnitude()
         try:
-            forcemagnitude = (self.childClass.rb.mass * objToAttract.rb.mass) / math.pow(distance, 2)
+            forcemagnitude =  G * (self.childClass.rb.mass * objToAttract.rb.mass) / math.pow(distance, 2)
             # Calculate Euclidian distance Instead
             force = direction.normalize() * forcemagnitude
         except ZeroDivisionError:
             force = pygame.math.Vector2(0, 0)
-        print(force.xy)
+        force = force.distance_to(objToAttract.vector)
         # Add some force
         # How?
         # return pygame.math.Vector2.move_towards(objToAttract.vector, force)
