@@ -48,7 +48,7 @@ class Player(Sprite):
         self.velocity.xy = 0, 0
 
     def Physics(self, floorobjects, groundObjects):
-        self.engine.verticalCollision(self, [ground])
+        self.velocity.y += self.engine.earthGravity(self.mass, self.vector, ground.vector, largemass_y=ground.vector.y, smallmass_y=self.vector.y)
 
     def draw(self):
         self.rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)
