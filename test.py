@@ -1,12 +1,29 @@
-x = [100, 100]
-y = [100, 200]
+import pygame
+import SmallObject
+import time
 
-# Distance between two points should be 100
-distance = max(x[1], y[1]) - min(x[1], y[1])
+pygame.init()
+
+WIDTH, HEIGHT = 1000, 900
+win = pygame.display.set_mode((WIDTH, HEIGHT))
+
+
+obj1 = SmallObject.smallObject(300, 100, 100, 100, 1)
+obj2 = pygame.Vector2(300, 700)
+
 run = True
 while run:
-    print(distance)
-    force = ((6.67 * (10 ** -11)) * (6 * 10 ** 24) * 1) / distance
-    x[1] -= force
-    if distance <= 0:
-        break
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            run = False
+            break
+    win.fill((255, 255, 255))
+
+    obj1.vector.move_towards_ip(obj2, 9.8)
+    obj1.draw(win)
+    distance = obj1.vector.distance_to(obj2)
+    if distance == 0:
+        obj1.vector = pygame.Vector2(300, 100)
+    print(obj1.vector.xy)
+    pygame.display.update()
