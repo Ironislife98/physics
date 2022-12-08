@@ -6,12 +6,12 @@ import Collision2D
 
 pygame.init()
 
-WIDTH, HEIGHT = 1000, 900
+WIDTH, HEIGHT = 1000, 1600
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
 obj1 = SmallObject.smallObject(100, 100, 100, 100, 1000000, color=(255, 0, 0))
-obj2 = SmallObject.smallObject(100, 500, 1000, 1000, 10000000, name="Ground1")
+obj2 = SmallObject.smallObject(150, 1200, 1000, 1000, 10000000, name="Ground1")
 
 
 run = True
@@ -36,10 +36,15 @@ while run:
         #obj1.vector = pygame.math.Vector2(10, 100)
     elif not collide[0] and obj1.jumping:
         movetowards = Physics2D.update(obj1.rb.mass, obj2.rb.mass, pygame.math.Vector2(obj1.vector.x, obj1.vector.y), obj2.vector)
-        obj1.vector.y = movetowards.y
+        obj1.vector = movetowards
         #print("move down")
     pygame.draw.rect(win, (0, 255, 0), pygame.Rect(obj1.bottom.x, obj1.bottom.y, 10, 10))   
     #print(movetowards)
     
+    if pygame.mouse.get_pressed()[0]:
+        obj1.vector.xy = pygame.mouse.get_pos()
+        obj1.jumping = True
+
+
     #print(obj1.vector, obj2.vector)
     pygame.display.update()
