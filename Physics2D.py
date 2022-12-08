@@ -51,7 +51,20 @@ class Attractor:
         return self.rb.addForce(self.childClass.vector, objToAttract.vector, force)
 
 
+
+def findGround(height, objx, listOfGround):
+    # for all positions, get ground y value, calculate before game runs
+    # store in dict
+    # access for gravity
+    for y in range(height):
+        for rect in listOfGround:
+            #print(objx, y)
+            pygame.draw.rect(win, (0, 0, 255), pygame.Rect(objx, y, 10, 1))
+            if rect.collidepoint(objx, y):
+                print(objx, y)
+
 def update(smallMass: float, largeMass: float, smallVector: pygame.math.Vector2, largeVector: pygame.math.Vector2) -> pygame.math.Vector2:
+    #findGround(900, smallVector.x, [pygame.Rect(largeVector.x, largeVector.y, 1000, 1000)])
     distance = smallVector.distance_to(largeVector)
     try:
         # f = G * (m1 * m2 / d^2)
