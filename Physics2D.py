@@ -49,3 +49,17 @@ class Attractor:
         # How?
         # return pygame.math.Vector2.move_towards(objToAttract.vector, force)
         return self.rb.addForce(self.childClass.vector, objToAttract.vector, force)
+
+
+def update(smallMass: float, largeMass: float, smallVector: pygame.math.Vector2, largeVector: pygame.math.Vector2) -> pygame.math.Vector2:
+    distance = smallVector.distance_to(largeVector)
+    try:
+        # f = G * (m1 * m2 / d^2)
+        force = G * ((smallMass * largeMass) / distance)
+        # f = GM / d^2
+        # force = (G * largeMass) / distance
+    except ZeroDivisionError:
+        force = 0
+    # print(f"Force: {force}, Distance: {distance}")
+    return smallVector.move_towards(largeVector, force)
+
