@@ -11,12 +11,9 @@ class smallObject:
         self.height = height
         self.rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)
         self.color = color
-        self.rb = RigidBody2D(mass, drag=1)
+        self.rb = RigidBody2D(mass)
         self.name = name
         self.jumping = True
-
-
-        super().__init__(self.rb, childClass=self)
 
     def draw(self, surface):
         self.rect = pygame.Rect(self.vector.x, self.vector.y, self.width, self.height)

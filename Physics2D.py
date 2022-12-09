@@ -1,5 +1,5 @@
 import pygame.math
-import math
+import json
 
 Attractors = []
 
@@ -38,23 +38,25 @@ class Gravity:
                     self.groundVector[objx] = y
 
     def precomputeGround(self, groundobjects):
-        for rect in groundobjects:
-            for x in range(-self.generateRadius, self.generateRadius):
-                for y in range(self.windowHeight):
-                    if rect.collidepoint(x, y):
-                        self.groundVectors[str(x)] = y
-                    else:
-                        self.groundVectors[str(x)] = self.defaultY
+        try:
+            with open("groundVectors.json") as f:
+                self.groundVectors = json.load(f)
+        except FileNotFoundError:
+            for rect in groundobjects:
+                for x in range(-self.generateRadius, self.generateRadius):
+                    for y in range(self.windowHeight):
+                        if rect.collidepoint(x, y):
+                            self.groundVectors[str(x)] = y
+                        else:
+                            self.groundVectors[str(x)] = self.defaultY
+            with open("groundVectors.json", "w+") as f:
+                json.dump(self.groundVectors, f)
 
     def update(self, smallMass: float, largeMass: float, smallVector: pygame.math.Vector2, largeVector: pygame.math.Vector2 = pygame.math.Vector2()) -> pygame.math.Vector2:
-        #findGround(900, smallVector.x, [pygame.Rect(largeVector.x, largeVector.y, 1000, 1000])
         if not self.autoGenerateGround:
             distance = smallVector.distance_to(largeVector)
         else:
-            #print(self.groundVectors)
-            
-            distance = smallVector.distance_to(pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]])) 
-            #print(smallVector, pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]]), distance)
+            distance = smallVector.distance_to(pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]]))
         try:
             # f = G * (m1 * m2 / d^2)
             force = G * ((smallMass * largeMass) / distance)
