@@ -12,8 +12,10 @@ win = pygame.display.set_mode((WIDTH, HEIGHT))
 
 obj1 = SmallObject.smallObject(100, 100, 100, 100, 100000, color=(255, 0, 0))
 obj2 = SmallObject.smallObject(200, 800, 1000, 1000, 100000000, name="Ground1")
+obj3 = SmallObject.smallObject(300, 100, 100, 100, 100000, color=(255, 0, 0))
 
-gravObject = Physics2D.Gravity()
+
+gravObject = Physics2D.Gravity(windowHeight=HEIGHT)
 gravObject.precomputeGround([obj2.rect])
 
 run = True
@@ -28,6 +30,7 @@ while run:
     win.fill((255, 255, 255))
     obj2.draw(win)
     obj1.draw(win)
+    obj3.draw(win)
 
     #gravObject.findGround(win, HEIGHT, obj1.vector.x, [obj2.rect])
 
@@ -41,6 +44,16 @@ while run:
     elif not collide[0] and obj1.jumping:
         movetowards = gravObject.update(obj1.rb.mass, obj2.rb.mass, pygame.math.Vector2(obj1.vector.x, obj1.vector.y), obj2.vector)
         obj1.vector.y = movetowards.y
+    collide = Collision2D.detectCollision(obj3, [obj2])
+    if collide[0] and obj3.jumping:
+        obj3.rect.bottom = collide[1].rect.top
+        obj3.vector.y = obj3.rect.top
+        obj3.jumping = False
+        print("colllide")
+        #obj1.vector = pygame.math.Vector2(10, 100)
+    elif not collide[0] and obj3.jumping:
+        movetowards = gravObject.update(obj3.rb.mass, obj2.rb.mass, pygame.math.Vector2(obj3.vector.x, obj3.vector.y), obj2.vector)
+        obj3.vector.y = movetowards.y
         #print("move down")
     #print(movetowards)
     

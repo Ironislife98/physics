@@ -54,12 +54,15 @@ class Attractor:
 
 
 class Gravity:
-    def __init__(self, autoGenerateGround=True, generateRadius=10000, windowHeight=900, defaultY=-1000) -> None:
+    def __init__(self, autoGenerateGround=True, generateRadius=10000, windowHeight=900, defaultY=None) -> None:
         self.groundVectors = {}
         self.autoGenerateGround = autoGenerateGround
         self.generateRadius = generateRadius
-        self.windowHeight = 900
-        self.defaultY = defaultY
+        self.windowHeight = windowHeight
+        if defaultY:
+            self.defaultY = defaultY
+        else:
+            self.defaultY = self.windowHeight
 
     def findGround(self, win, objx, listOfGround):
         # for all positions, get ground y value, calculate before game runs
@@ -83,13 +86,13 @@ class Gravity:
 
     def update(self, smallMass: float, largeMass: float, smallVector: pygame.math.Vector2, largeVector: pygame.math.Vector2 = pygame.math.Vector2()) -> pygame.math.Vector2:
         #findGround(900, smallVector.x, [pygame.Rect(largeVector.x, largeVector.y, 1000, 1000])
-        #if not self.autoGenerateGround:
-           # distance = smallVector.distance_to(largeVector)
-        #else:
+        if not self.autoGenerateGround:
+            distance = smallVector.distance_to(largeVector)
+        else:
             #print(self.groundVectors)
             
-        distance = smallVector.distance_to(pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]])) 
-        print(smallVector, pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]]), distance)
+            distance = smallVector.distance_to(pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]])) 
+            #print(smallVector, pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]]), distance)
         try:
             # f = G * (m1 * m2 / d^2)
             force = G * ((smallMass * largeMass) / distance)
@@ -98,5 +101,8 @@ class Gravity:
         except ZeroDivisionError:
             force = 0
         # print(f"Force: {force}, Distance: {distance}")
-        return smallVector.move_towards(largeVector, force)
+        if not self.autoGenerateGround:
+            return smallVector.move_towards(largeVector, force)
+        else:
+            return smallVector.move_towards(pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]]), force)
 
