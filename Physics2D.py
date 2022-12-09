@@ -52,27 +52,51 @@ class Attractor:
 
 
 
-def findGround(height, objx, listOfGround):
-    # for all positions, get ground y value, calculate before game runs
-    # store in dict
-    # access for gravity
-    for y in range(height):
-        for rect in listOfGround:
-            #print(objx, y)
-            pygame.draw.rect(win, (0, 0, 255), pygame.Rect(objx, y, 10, 1))
-            if rect.collidepoint(objx, y):
-                print(objx, y)
 
-def update(smallMass: float, largeMass: float, smallVector: pygame.math.Vector2, largeVector: pygame.math.Vector2) -> pygame.math.Vector2:
-    #findGround(900, smallVector.x, [pygame.Rect(largeVector.x, largeVector.y, 1000, 1000)])
-    distance = smallVector.distance_to(largeVector)
-    try:
-        # f = G * (m1 * m2 / d^2)
-        force = G * ((smallMass * largeMass) / distance)
-        # f = GM / d^2
-        # force = (G * largeMass) / distance
-    except ZeroDivisionError:
-        force = 0
-    # print(f"Force: {force}, Distance: {distance}")
-    return smallVector.move_towards(largeVector, force)
+class Gravity:
+    def __init__(self, autoGenerateGround=True, generateRadius=10000, windowHeight=900, defaultY=-1000) -> None:
+        self.groundVectors = {}
+        self.autoGenerateGround = autoGenerateGround
+        self.generateRadius = generateRadius
+        self.windowHeight = 900
+        self.defaultY = defaultY
+
+    def findGround(self, win, objx, listOfGround):
+        # for all positions, get ground y value, calculate before game runs
+        # store in dict
+        # access for gravity
+        for y in range(self.windowHeight):
+            for rect in listOfGround:
+                #print(objx, y)
+                pygame.draw.rect(win, (0, 0, 255), pygame.Rect(objx, y, 10, 1))
+                if rect.collidepoint(objx, y):
+                    self.groundVector[objx] = y
+
+    def precomputeGround(self, groundobjects):
+        for rect in groundobjects:
+            for x in range(-self.generateRadius, self.generateRadius):
+                for y in range(self.windowHeight):
+                    if rect.collidepoint(x, y):
+                        self.groundVectors[str(x)] = y
+                    else:
+                        self.groundVectors[str(x)] = self.defaultY
+
+    def update(self, smallMass: float, largeMass: float, smallVector: pygame.math.Vector2, largeVector: pygame.math.Vector2 = pygame.math.Vector2()) -> pygame.math.Vector2:
+        #findGround(900, smallVector.x, [pygame.Rect(largeVector.x, largeVector.y, 1000, 1000])
+        #if not self.autoGenerateGround:
+           # distance = smallVector.distance_to(largeVector)
+        #else:
+            #print(self.groundVectors)
+            
+        distance = smallVector.distance_to(pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]])) 
+        print(smallVector, pygame.math.Vector2(smallVector.x, self.groundVectors[str(smallVector.x)[:-2]]), distance)
+        try:
+            # f = G * (m1 * m2 / d^2)
+            force = G * ((smallMass * largeMass) / distance)
+            # f = GM / d^2
+            # force = (G * largeMass) / distance
+        except ZeroDivisionError:
+            force = 0
+        # print(f"Force: {force}, Distance: {distance}")
+        return smallVector.move_towards(largeVector, force)
 
