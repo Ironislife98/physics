@@ -1,10 +1,10 @@
 from pygame.math import Vector2
 import pygame
-from Physics2D import RigidBody2D, Attractor
+from Physics2D import RigidBody2D
 
 
 # All objects need a .name
-class smallObject(Attractor):
+class smallObject:
     def __init__(self, x, y, width, height, mass, name="smallObject", color=(0, 0, 0)):
         self.vector = Vector2(x, y)
         self.width = width
