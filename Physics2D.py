@@ -64,7 +64,6 @@ class Gravity:
             # force = (G * largeMass) / distance
         except ZeroDivisionError:
             force = 0
-        # print(f"Force: {force}, Distance: {distance}")
         if not self.autoGenerateGround:
             return smallVector.move_towards(largeVector, force)
         else:
