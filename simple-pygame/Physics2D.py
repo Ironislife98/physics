@@ -30,6 +30,7 @@ class Gravity:
         # for all positions, get ground y value, calculate before game runs
         # store in dict
         # access for gravity
+        # random comment
         for y in range(self.windowHeight):
             for rect in listOfGround:
                 #print(objx, y)
