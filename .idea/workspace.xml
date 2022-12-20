@@ -11,15 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="264d9d0a-68e5-4beb-a4ed-69042b348ce2" name="Default Changelist" comment="Collisions still not working!">
-      <change afterPath="$PROJECT_DIR$/DraggableExample.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/publish.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pygameutilities/Draggable.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sinewave.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EarthGravityPhysicsExample.py" beforeDir="false" afterPath="$PROJECT_DIR$/EarthGravityPhysicsExample.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pygameutilities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pygameutilities/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DraggableExample.py" beforeDir="false" afterPath="$PROJECT_DIR$/DraggableExample.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pygameutilities/Draggable.py" beforeDir="false" afterPath="$PROJECT_DIR$/pygameutilities/Draggable.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pygameutilities/objectClasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/pygameutilities/objectClasses.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +48,7 @@
       <recent name="D:\PycharmProjects\Pygame-lib\pygame-lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.sinewave">
+  <component name="RunManager" selected="Python.DraggableExample">
     <configuration name="DraggableExample" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="pygameutils" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -197,22 +192,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="739" y="286" key="FileChooserDialogImpl/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671510526854" />
-    <state width="1897" height="281" key="GridCell.Tab.0.bottom" timestamp="1671513362496">
+    <state width="1897" height="281" key="GridCell.Tab.0.bottom" timestamp="1671515104628">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1897" height="281" key="GridCell.Tab.0.bottom/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671513362496" />
-    <state width="1897" height="281" key="GridCell.Tab.0.center" timestamp="1671513362496">
+    <state width="1897" height="281" key="GridCell.Tab.0.bottom/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671515104628" />
+    <state width="1897" height="281" key="GridCell.Tab.0.center" timestamp="1671515104628">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1897" height="281" key="GridCell.Tab.0.center/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671513362496" />
-    <state width="1897" height="281" key="GridCell.Tab.0.left" timestamp="1671513362495">
+    <state width="1897" height="281" key="GridCell.Tab.0.center/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671515104628" />
+    <state width="1897" height="281" key="GridCell.Tab.0.left" timestamp="1671515104628">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1897" height="281" key="GridCell.Tab.0.left/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671513362495" />
-    <state width="1897" height="281" key="GridCell.Tab.0.right" timestamp="1671513362496">
+    <state width="1897" height="281" key="GridCell.Tab.0.left/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671515104628" />
+    <state width="1897" height="281" key="GridCell.Tab.0.right" timestamp="1671515104628">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1897" height="281" key="GridCell.Tab.0.right/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671513362496" />
+    <state width="1897" height="281" key="GridCell.Tab.0.right/-1920.1.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1671515104628" />
     <state x="304" y="178" key="SettingsEditor" timestamp="1670163285970">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

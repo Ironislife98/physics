@@ -30,3 +30,8 @@ class dragObject:
 
     def checkDragged(self, mousecords, vector: Vector2) -> Vector2:
         pass
+
+    # On mouse down
+    # Check if mouse collides with sprite
+    # then move rect with cursor
+    # until mouse up
