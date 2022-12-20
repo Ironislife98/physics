@@ -1,6 +1,6 @@
 from pygame import Rect
 from pygame.math import Vector2
-from Physics2D import RigidBody2D
+from pygameutilities.Physics2D import RigidBody2D
 
 
 class physicsObject:
@@ -22,3 +22,11 @@ class physicsObject:
         self.rect = Rect(self.vector.x, self.vector.y, self.width, self.height)
         self.name = name
         self.rb = RigidBody2D(int(mass))
+
+
+class dragObject:
+    def __init__(self):
+        self.draggable = False
+
+    def checkDragged(self, mousecords, vector: Vector2) -> Vector2:
+        pass

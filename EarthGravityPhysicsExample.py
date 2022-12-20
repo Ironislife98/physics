@@ -1,8 +1,8 @@
 import pygame
 from pygame import Rect
-import Physics2D
-import Collision2D
-from objectClasses import physicsObject
+import pygameutilities.Physics2D as Physics2D
+import pygameutilities.Collision2D as Collision2D
+from pygameutilities.objectClasses import physicsObject
 
 pygame.init()
 

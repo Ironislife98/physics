@@ -1,3 +1,3 @@
-from pygameutilities.Physics2D import *
-from pygameutilities.Collision2D import *
-from pygameutilities.objectClasses import *
+import pygameutilities.Physics2D
+import pygameutilities.Collision2D
+import pygameutilities.objectClasses
